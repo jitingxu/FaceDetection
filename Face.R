@@ -59,3 +59,10 @@ head(predictions)
 library(reshape2)
 submission <- melt(predictions, id.vars="ImageId", variable.name="FeatureName", value.name="Location")
 head(submission)
+#seperate the data set into two subsets
+library(plyr)
+data.dir <- getwd();
+example.submission <- read.csv(paste0(data.dir, '/', 'IdLookupTable.csv'));
+sub.col.names <- c("RowId","Location")
+cdata <- ddply(example.submission, .(ImageId), summarise, N = length(ImageId))
+table(cdata$N)
